@@ -1,0 +1,644 @@
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@font-face {
+  font-family: 'ElzaTrial';
+  src: url('./font/ElzaTrial-Bold.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SilvaTextTrial';
+  src: url('./font/SilvaTextTrial-Book.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+.email-display, .email-input {
+  font-family: 'ElzaTrial', Arial, sans-serif;
+}
+
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #d60000;
+  font-family: 'UnifrakturCook', cursive;
+  color: black;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+h1 {
+  font-size: 20rem;
+  text-align: center;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+/* ================================
+   Main Logo Base Styles
+   ================================ */
+.main-logo {
+  object-fit: contain;
+}
+
+/* ================================
+   Desktop Only Styling
+   ================================ */
+.desktop-only {
+  display: block;
+  width: 4036px;
+  height: 584px;
+  max-width: none;
+  max-height: 100vh;
+  object-fit: contain;
+
+  position: absolute;
+  left: 33%;
+  top: 60%;
+  transform: translate(-400px, -50%);
+}
+
+/* ================================
+   Mobile Only Styling
+   ================================ */
+.mobile-only {
+  display: none;
+}
+
+/* ================================
+   Mobile Media Query
+   ================================ */
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none;
+  }
+
+  .mobile-only {
+    display: block;
+    width: 180px;
+    height: auto;
+  }
+}
+
+/* ================================
+   Responsive Typography and Padding
+   ================================ */
+@media (min-width: 768px) {
+  .page {
+    font-size: 3rem;
+    background-color: #E30613;
+  }
+}
+
+@media (max-width: 767px) {
+  .page {
+    font-size: 2rem;
+    background-color: #E30613;
+    padding: 20px;
+  }
+}
+
+/* ================================
+   Main Page Layout
+   ================================ */
+.main-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #E30613;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  position: relative;
+  flex-direction: column;
+}
+
+
+/* ================================
+   Copyright Text
+   ================================ */
+.copyright {
+  position: absolute;
+  right: 20px;          
+  bottom: 40px;        
+  font-family: 'ElzaTrial', sans-serif;
+  font-weight: bold;
+  font-size: 32px;
+  width: 261px;
+  height: 20px;
+  line-height: 44px;
+  color: #000000;
+  z-index: 10;
+}
+
+@media (max-width: 767px) {
+  .copyright {
+    right: -100px;
+    bottom: 20px;
+    font-size: 16px;
+  }
+}
+
+.fallback-symbol {
+  font-family: Arial, sans-serif;
+}
+
+/* ================================
+   Second Page Styling
+   ================================ */
+.second-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #E30613;
+  height: 100vh;
+  width: 100vw;
+  cursor: pointer;
+  overflow: hidden;
+  text-align: center;
+}
+
+.second-heading {
+  font-family: 'ElzaTrial', sans-serif;
+  font-weight: bold;
+  font-size: 300px;
+  color: black;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  letter-spacing: -4px; 
+}
+
+.question-mark {
+  font-family: 'Arial', sans-serif;
+  font-weight: 900;
+}
+
+/* ================================
+   Mobile Second Page Styling
+   ================================ */
+
+   @media (max-width: 768px) {
+  .second-heading {
+    font-size: 70px; 
+    line-height: 1.1;
+    letter-spacing: -1px;
+  }
+
+  .question-mark {
+    font-size: 75px;
+    font-weight: 1000; 
+    transform: scale(1.1);
+    display: inline-block;
+  }
+
+  .second-page {
+    padding: 0 15px; 
+  }
+}
+
+
+/* ================================
+   Email Page Layout
+   ================================ */
+.email-page {
+  background-color: #E30613;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 60px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.email-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 10px 10px;
+}
+
+.email-logo {
+  width: 280px;
+  margin-bottom: 20px;
+}
+
+.email-paragraph {
+  color: white;
+  font-weight: bold;
+  font-family: 'SilvaTextTrial', sans-serif;
+  font-size: 24px;
+  line-height: 1.2;
+  max-width: 500px;
+  margin: 0;
+}
+
+/* ================================
+   Form Layout
+   ================================ */
+.email-form {
+  position: absolute;
+  bottom: 180px;
+  right: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+ transform: translateY(30px);
+}
+
+/* ================================
+   Dotted Input Wrapper
+   ================================ */
+.dotted-input-wrapper {
+  position: relative;
+  width: 725px;
+  height: 253px;
+}
+
+.email-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 192px;
+  font-family: 'ElzaTrial', Arial, sans-serif;
+  font-weight: bold;
+  color: transparent;            
+  text-shadow: 0 0 0 transparent;
+  caret-color: transparent;       
+  z-index: 3;                    
+}
+
+
+.email-input::selection {
+  background: rgba(0, 0, 0, 0.3);
+  color: transparent;
+}
+
+.dotted-line {
+  position: absolute;
+  bottom: -10px;
+  display: flex;
+  justify-content: space-between;
+  gap: 35px;
+  width: 100%;
+}
+
+.cube {
+  width: 28px;
+  height: 28px;
+  background-color: black;
+}
+
+.custom-caret {
+  position: absolute;
+  bottom: 0;
+  width: 28px;
+  height: 253px;
+  background-color: black;
+  animation: blink 1s infinite;
+  transform: translate(60px, 10px);
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+
+.email-display {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 192px;
+  font-weight: bold;
+  font-family: 'ElzaTrial', sans-serif;
+  color: rgba(0, 0, 0, 0.2);
+  white-space: nowrap;
+  transform-origin: left center;
+  pointer-events: none;
+}
+.placeholder-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 192px;
+  font-weight: bold;
+  font-family: 'ElzaTrial', Arial, sans-serif;
+  color: rgba(0, 0, 0, 0.105);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+
+
+.join-text {
+  margin-top: 40px;
+  font-size: 150px;
+  font-family: 'ElzaTrial', sans-serif;
+  font-weight: bold;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+  line-height: 1;
+   transform: translate(60px, 100px);
+}
+
+/* ================================
+   📱 Mobile-Only Email Page Styling
+   ================================ */
+@media (max-width: 768px) {
+  .email-page {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+  }
+    .email-left {
+    margin-top: 80px;
+  }
+
+
+  .email-logo {
+    width: 124px;
+    margin-bottom: 17px;
+  }
+
+  .email-paragraph {
+    font-size: 12px;
+    max-width: 53%;
+    margin-bottom: 0px;
+    font-weight: bold;
+    line-height: 1.3;
+  }
+
+
+  .email-form {
+    position: static;
+    width: 100%;
+    align-items: flex-start;
+    transform: none;
+    margin-top: 140px;
+    
+  }
+
+  
+  .dotted-input-wrapper {
+    transform: translate(18px,-183px);
+    width: 90%;
+    height: 120px;
+  }
+
+  .email-input {
+    font-size: 90px;
+    
+  }
+
+  .email-display,
+  .placeholder-text {
+    font-size: 90px;
+    transform: translate(93px,10px);
+  }
+
+  .custom-caret {
+    width: 12px;
+    height: 120px;
+    transform: translate(33px, 5px);
+  }
+
+  .dotted-line {
+    gap: 15px;
+  }
+
+  .cube {
+    width: 12px;
+    height: 12px;
+  }
+
+  .join-text {
+    text-align: right;
+    font-size: 90px;
+    transform: translate(180px, -179px);
+  }
+}
+
+
+/* ================================
+   Last page styles
+   ================================ */
+
+.after-page {
+  background-color: #f5f5f5;
+  color: black;
+  font-family: 'SilvaTextTrial', sans-serif;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 40px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+
+/* Top section */
+.after-header {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.after-logo {
+  width: 240px;
+  margin-bottom: 19px;
+}
+
+.after-text {
+  font-style: bold;
+  font-size: 18px;
+  color: #D60000;
+  font-weight: bold;
+  font-family: 'SilvaTextTrial', sans-serif;
+  font-size: 24px;
+  line-height: 1.2;
+  max-width: 500px;
+  margin: 0;
+}
+
+.after-main-text {
+  position: absolute;
+  bottom: 80px;           
+  left: 0;                
+  width: 100%;           
+  padding-left: 70px;     
+  font-family: 'ElzaTrial', sans-serif;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.after-main-text h1 {
+  font-size: 192px;
+  color: #E30613;
+  margin: 0;
+  text-align: left;      
+  line-height: 1.05;
+  white-space: normal;
+  word-break: break-word;
+  transform: translate(-40px,70px);
+}
+
+
+.after-page {
+  background-color: #f5f5f5;
+  color: black;
+  font-family: 'SilvaTextTrial', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 40px 10px;   
+
+}
+
+
+
+.after-footer {
+  position: absolute;
+  bottom: 35px;
+  right: 90px;
+  text-align: right;
+}
+
+.footer-question {
+  font-weight: bold;
+  font-family: 'ElzaTrial', sans-serif;
+  font-size: 32px;
+  margin: 0;
+  color: black;
+}
+
+.footer-email {
+  font-weight: bold;
+  color: #00000046;
+  font-family: 'ElzaTrial', sans-serif;
+  font-size: 32px;
+  text-align: left;
+  margin: 5px 0 0;
+}
+
+@media (max-width: 768px) {
+  .after-page {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 80px;
+  }
+
+  .after-header {
+    position: relative;
+    top: 20px;
+    left: -50px;
+    margin-bottom: 17px;
+    align-items: flex-start;
+  }
+
+  .after-logo {
+    width: 124px;
+    margin-bottom: 17px;
+
+  }
+
+  .after-text {
+    font-size: 12px;
+    max-width: 75%;
+    margin-bottom: 0px;
+    font-weight: bold;
+    line-height: 1.3;
+  }
+
+.after-main-text {
+  bottom: 0;
+  transform: translate(-70px,-400px);
+  padding-left: 100px; /* Matches screenshot X position */
+  margin-top: 40px;
+  max-width: 295px; /* ✅ Matches screenshot width */
+}
+
+.after-main-text h1 {
+  font-family: 'ElzaTrial', sans-serif;
+  font-weight: bold;
+  font-size: 40px; 
+  line-height: 44px; /* ✅ Matches screenshot line height */
+  color: #E30613;
+  margin: 0;
+  text-align: left;
+  word-break: break-word;
+  transform: none;
+}
+
+  .after-footer {
+    position: absolute;
+    bottom: 1px;
+    transform: translateY(-100%);
+    left: 85px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .footer-question {
+    font-weight: bold;
+    font-family: 'ElzaTrial', sans-serif;
+    font-size: 16px;
+    margin: 0;
+    transform: translate(60px,-95px);
+    white-space: nowrap;
+    display: inline-block;
+  }
+  .footer-question .question-mark {
+  font-size: 13px;
+  font-weight: 100%
+  }
+
+  .footer-email {
+    font-size: 16px;
+    font-weight: bold;
+    color: #00000029;
+    margin-top: 2px;
+    transform: translate(-90%,-400%);
+  }
+}
