@@ -2,6 +2,7 @@ import express from "express";
 import emailRouter from "./models/email/email.router";
 
 const app = express();
+app.use(express.json());
 
 app.use("/api/", emailRouter);
 
