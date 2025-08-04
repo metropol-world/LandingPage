@@ -69,62 +69,83 @@ const EmailPage: React.FC = () => {
     }
   }, [email, isMobile]);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email.trim()) navigate('/aftersubmit');
-  };
-
   return (
     <div className="email-page">
-      <div className="email-left">
+      <div className="email-left fade-step1">
         <img 
           src="/metropol-logo/Metropol_Logo_Full_Black.png" 
           alt="Metropol Logo" 
           className="email-logo" 
         />
         <p className="email-paragraph">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Phasellus ut augue lacinia, cursus neque ac, imperdiet est.
-          Cras eu vulputate nibh. Duis pellentesque nec ligula.
+          We<span className="question-mark1">'</span>re better in person.<br></br>
+          There<span className="question-mark1">'</span>s a 100 things happening in London right now.<br></br>
+          Every day could be new.
         </p>
       </div>
-      <form onSubmit={handleSubmit} className="email-form">
-       <div className="dotted-input-wrapper">
-  <input
-    ref={inputRef}
-    type="text"
-    value={email}
-    onChange={(e) => setEmail(e.target.value)}
-    className="email-input"
-    spellCheck={false}
-  />
 
-  {!email && <span className="placeholder-text">email</span>}
+      <form className="email-form fade-step2">
+        <div className="dotted-input-wrapper">
+          <input
+            ref={inputRef}
+            type="text"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="email-input"
+            spellCheck={false}
+          />
+          {!email && <span className="placeholder-text">email</span>}
+          <span ref={displayRef} className="email-display">
+            {displayText.length ? displayText : ''}
+          </span>
+          <div className="dotted-line">
+            {Array.from({ length: 12 }).map((_, i) => (
+              <div className="cube" key={i}></div>
+            ))}
+          </div>
+          <div ref={caretRef} className="custom-caret"></div>
+        </div>
 
-  <span ref={displayRef} className="email-display">
-    {displayText.length ? displayText : ''}
-  </span>
 
-  <div className="dotted-line">
-    {Array.from({ length: 12}).map((_, i) => (
-      <div className="cube" key={i}></div>
-    ))}
-  </div>
-
-  <div ref={caretRef} className="custom-caret"></div>
-</div>
+        
 
         <button 
-          type="button"
-          className="join-text"
-          onClick={() => email.trim() && navigate('/aftersubmit')}
-          style={{ fontSize: isMobile ? "90px" : "150px" }}
-        >
-          join<span className="question-mark">?</span>
-        </button>
+  type="button"
+  className="join-text"
+  onClick={async () => {
+    if (!email.trim()) return;
+
+    try {
+      const response = await fetch("http://localhost:8080/api/email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      console.log("📡 Status:", response.status);
+
+      if (response.ok) {
+        console.log("✅ Email saved successfully!");
+        navigate('/aftersubmit');
+      } else {
+        const data = await response.json();
+        console.error("❌ Failed:", data.error);
+      }
+    } catch (error) {
+      console.error("❌ Network error:", error);
+    }
+  }}
+  style={{ fontSize: isMobile ? "90px" : "150px" }}
+>
+  join<span className="question-mark">?</span>
+</button>
+
+
       </form>
     </div>
   );
 };
 
 export default EmailPage;
+
+

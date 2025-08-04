@@ -31,10 +31,12 @@
 }
 
 
+
 body {
   margin: 0;
   padding: 0;
-  background-color: #d60000;
+    overflow: hidden;
+  background-color: #E30613;
   font-family: 'UnifrakturCook', cursive;
   color: black;
   height: 100vh;
@@ -59,11 +61,18 @@ h1 {
   transition: all 0.3s ease-in-out;
 }
 
+
 /* ================================
    Main Logo Base Styles
    ================================ */
 .main-logo {
-  object-fit: contain;
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: transform 0.3s ease;
+  z-index: 100;
+  pointer-events: none;
 }
 
 /* ================================
@@ -79,16 +88,30 @@ h1 {
 
   position: absolute;
   left: 33%;
-  top: 60%;
+  top: 55%;
   transform: translate(-400px, -50%);
 }
 
-/* ================================
-   Mobile Only Styling
-   ================================ */
 .mobile-only {
   display: none;
 }
+
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none;
+  }
+
+  .mobile-only {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    object-fit: contain;
+  }
+}
+
+
 
 /* ================================
    Mobile Media Query
@@ -100,10 +123,12 @@ h1 {
 
   .mobile-only {
     display: block;
-    width: 180px;
-    height: auto;
+    width: 295px;
+    height: 136px;
   }
 }
+
+
 
 /* ================================
    Responsive Typography and Padding
@@ -198,6 +223,37 @@ h1 {
   font-family: 'Arial', sans-serif;
   font-weight: 900;
 }
+.question-mark1 {
+  font-family: 'Arial', sans-serif;
+  font-weight: 24;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 1s ease-in-out;
+}
+
+
+.background-animation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0; /* Push it behind */
+}
+
+
 
 /* ================================
    Mobile Second Page Styling
@@ -256,7 +312,7 @@ h1 {
   font-family: 'SilvaTextTrial', sans-serif;
   font-size: 24px;
   line-height: 1.2;
-  max-width: 500px;
+  max-width: 50px;
   margin: 0;
 }
 
@@ -276,6 +332,17 @@ h1 {
 /* ================================
    Dotted Input Wrapper
    ================================ */
+
+.fade-in2 {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.fade-in3 {
+  animation: fadeIn 0.25s ease-in-out;
+}
+
+
+
 .dotted-input-wrapper {
   position: relative;
   width: 725px;
@@ -376,6 +443,37 @@ h1 {
    transform: translate(60px, 100px);
 }
 
+
+@keyframes fadeInOrder {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-step1 {
+  opacity: 0;
+  animation: fadeInOrder 1.5s ease-in-out forwards;
+  animation-delay: 0.3s;
+}
+
+.fade-step2 {
+  opacity: 0;
+  animation: fadeInOrder 1.5s ease-in-out forwards;
+  animation-delay: 1.8s;
+}
+
+.fade-step3 {
+  opacity: 0;
+  animation: fadeInOrder 1.5s ease-in-out forwards;
+  animation-delay: 3.3s;
+}
+
+
 /* ================================
    📱 Mobile-Only Email Page Styling
    ================================ */
@@ -454,12 +552,13 @@ h1 {
 }
 
 
+
 /* ================================
    Last page styles
    ================================ */
 
 .after-page {
-  background-color: #f5f5f5;
+  background-color: #E30613; /* Start red */
   color: black;
   font-family: 'SilvaTextTrial', sans-serif;
   height: 100vh;
@@ -470,8 +569,12 @@ h1 {
   padding: 40px;
   box-sizing: border-box;
   position: relative;
+  transition: background-color 1s ease-in-out; 
 }
 
+.after-page.loaded {
+  background-color: #f5f5f5; /* Fade to white */
+}
 
 /* Top section */
 .after-header {
@@ -489,17 +592,16 @@ h1 {
 }
 
 .after-text {
-  font-style: bold;
-  font-size: 18px;
+  font-size: 24px;
   color: #D60000;
   font-weight: bold;
   font-family: 'SilvaTextTrial', sans-serif;
-  font-size: 24px;
   line-height: 1.2;
   max-width: 500px;
   margin: 0;
 }
 
+/* Main text */
 .after-main-text {
   position: absolute;
   bottom: 80px;           
@@ -522,21 +624,7 @@ h1 {
   transform: translate(-40px,70px);
 }
 
-
-.after-page {
-  background-color: #f5f5f5;
-  color: black;
-  font-family: 'SilvaTextTrial', sans-serif;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 40px 10px;   
-
-}
-
-
-
+/* Footer */
 .after-footer {
   position: absolute;
   bottom: 35px;
@@ -561,10 +649,9 @@ h1 {
   margin: 5px 0 0;
 }
 
+/* 📱 Mobile */
 @media (max-width: 768px) {
   .after-page {
-    flex-direction: column;
-    align-items: flex-start;
     padding: 80px;
   }
 
@@ -572,48 +659,35 @@ h1 {
     position: relative;
     top: 20px;
     left: -50px;
-    margin-bottom: 17px;
-    align-items: flex-start;
   }
 
   .after-logo {
     width: 124px;
     margin-bottom: 17px;
-
   }
 
   .after-text {
     font-size: 12px;
     max-width: 75%;
-    margin-bottom: 0px;
-    font-weight: bold;
     line-height: 1.3;
   }
 
-.after-main-text {
-  bottom: 0;
-  transform: translate(-70px,-400px);
-  padding-left: 100px; /* Matches screenshot X position */
-  margin-top: 40px;
-  max-width: 295px; /* ✅ Matches screenshot width */
-}
+  .after-main-text {
+    bottom: 0;
+    transform: translate(-70px,-400px);
+    padding-left: 100px;
+    max-width: 295px;
+  }
 
-.after-main-text h1 {
-  font-family: 'ElzaTrial', sans-serif;
-  font-weight: bold;
-  font-size: 40px; 
-  line-height: 44px; /* ✅ Matches screenshot line height */
-  color: #E30613;
-  margin: 0;
-  text-align: left;
-  word-break: break-word;
-  transform: none;
-}
+  .after-main-text h1 {
+    font-size: 40px;
+    line-height: 44px;
+    transform: none;
+  }
 
   .after-footer {
     position: absolute;
     bottom: 1px;
-    transform: translateY(-100%);
     left: 85px;
     display: flex;
     align-items: center;
@@ -621,24 +695,19 @@ h1 {
   }
 
   .footer-question {
-    font-weight: bold;
-    font-family: 'ElzaTrial', sans-serif;
     font-size: 16px;
-    margin: 0;
     transform: translate(60px,-95px);
-    white-space: nowrap;
-    display: inline-block;
   }
+
   .footer-question .question-mark {
-  font-size: 13px;
-  font-weight: 100%
+    font-size: 13px;
+    font-weight: 400;
   }
 
   .footer-email {
     font-size: 16px;
     font-weight: bold;
     color: #00000029;
-    margin-top: 2px;
     transform: translate(-90%,-400%);
   }
 }

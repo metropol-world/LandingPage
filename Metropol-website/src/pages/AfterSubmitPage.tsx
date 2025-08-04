@@ -1,8 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 const AfterSubmitPage: React.FC = () => {
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    // Trigger the background transition after a slight delay
+    const timer = setTimeout(() => {
+      setLoaded(true);
+    }, 20); // delay ensures React renders red first
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <div className="after-page">
+    <div className={`after-page ${loaded ? 'loaded' : ''}`}>
       <div className="after-header">
         <img 
           src="/metropol-logo/Metropol_Logo_Full_Black.png" 
@@ -23,7 +33,9 @@ const AfterSubmitPage: React.FC = () => {
       </div>
 
       <div className="after-footer">
-        <p className="footer-question">send to a friend<span className="question-mark">?</span></p>
+        <p className="footer-question">
+          send to a friend<span className="question-mark">?</span>
+        </p>
         <p className="footer-email">email here</p>
       </div>
     </div>
