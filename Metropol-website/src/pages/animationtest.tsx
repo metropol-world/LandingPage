@@ -26,17 +26,14 @@ const AnimatedPixelText: React.FC = () => {
 
 
 
-    // ✅ Custom offsets for desktop vs mobile
-    const textOffsetX = isMobile ? width / 2 - 10 : width / 2; // Shift left on mobile
-    const textOffsetY = isMobile ? height / 2 - 10: height / 2; // Lower position on mobile
+    const textOffsetX = isMobile ? width / 2 - 10 : width / 2; 
+    const textOffsetY = isMobile ? height / 2 - 10: height / 2; 
 
-    // ✅ Create text
     const textCanvas = document.createElement("canvas");
     textCanvas.width = cols;
     textCanvas.height = rows;
     const textCtx = textCanvas.getContext("2d")!;
 
-// Adjust font size dynamically
 const fontSize = isMobile ? 22 : 80;
 
 textCtx.fillStyle = "black";
@@ -46,7 +43,7 @@ textCtx.textBaseline = "middle";
 textCtx.fillText("want in?", cols / 2, rows / 2 + 5);
 
     const imageData = textCtx.getImageData(0, 0, cols, rows).data;
-    const spreadFactor = 0.05;
+    const spreadFactor = 0.055;
 
     const particles: any[] = [];
     const originalPositions: any[] = [];
@@ -88,6 +85,7 @@ textCtx.fillText("want in?", cols / 2, rows / 2 + 5);
 
     // === Events (Mouse + Touch) ===
     const handleMouseMove = (e: MouseEvent) => {
+         e.preventDefault();
       mouseRef.current.x = e.clientX;
       mouseRef.current.y = e.clientY;
     };
@@ -99,15 +97,16 @@ textCtx.fillText("want in?", cols / 2, rows / 2 + 5);
       }
     };
 
-    const handleTouchEnd = () => {
+    const handleTouchEnd = (e: TouchEvent) => {
+      e.preventDefault();
       mouseRef.current.x = -9999;
       mouseRef.current.y = -9999;
     };
 
-    canvas.addEventListener("mousemove", handleMouseMove);
-    canvas.addEventListener("touchmove", handleTouchMove);
-    canvas.addEventListener("touchend", handleTouchEnd);
-    canvas.addEventListener("touchcancel", handleTouchEnd);
+ canvas.addEventListener("mousemove", handleMouseMove);
+  canvas.addEventListener("touchmove", handleTouchMove, { passive: false });
+  canvas.addEventListener("touchend", handleTouchEnd, { passive: false });
+  canvas.addEventListener("touchcancel", handleTouchEnd, { passive: false });
 
     // === Animation Loop ===
     const animate = () => {
@@ -116,10 +115,10 @@ textCtx.fillText("want in?", cols / 2, rows / 2 + 5);
 
       const hoverRadius = isMobile ? 50 : 20;
       const pushForce = 100;
-      const spreadMultiplier = 3.5;
-      const returnSpeed = 0.01;
+      const spreadMultiplier = 1;
+      const returnSpeed = 0.016;
       const jumpStep = 10;
-      const snapThreshold = 10;
+      const snapThreshold = 2;
 
       particles.forEach((p) => {
         const dx = p.x - mouseRef.current.x;

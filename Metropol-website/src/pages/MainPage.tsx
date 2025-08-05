@@ -15,18 +15,20 @@ const MainPage: React.FC = () => {
 const handleWheel = (event: WheelEvent) => {
   if (event.deltaX !== 0 || event.deltaY !== 0) {
     // Invert both scroll directions
-    logoPosRef.current -= (event.deltaY + event.deltaX) * 0.3;
+    logoPosRef.current -= (event.deltaY + event.deltaX) * 0.35;
 
-    const minPos = -window.innerWidth * 2;
+    const minPos = -window.innerWidth * 2.2;
     if (logoPosRef.current < minPos) logoPosRef.current = minPos;
 
- if (logoRef.current) {
-  gsap.to(logoRef.current, {
-    x: logoPosRef.current,
-    ease: 'none', // no easing, just a direct position change
-    duration: 0 // instant
-  });
-}
+    if (logoRef.current) {
+      gsap.killTweensOf(logoRef.current);
+
+      gsap.to(logoRef.current, {
+        x: logoPosRef.current,
+        ease: "power1.out",
+        duration: 0 
+      });
+    }
 
 
     if (logoPosRef.current <= minPos) {

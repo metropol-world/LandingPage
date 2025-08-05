@@ -20,9 +20,9 @@ const AfterSubmitPage: React.FC = () => {
           className="after-logo"
         />
         <p className="after-text">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-          Phasellus ut augue lacinia, cursus neque ac, imperdiet est. 
-          Cras eu vulputate nibh. Duis pellentesque nec ligula.
+         We<span className="question-mark1">'</span>re better in person.<br></br>
+         There<span className="question-mark1">'</span>s a 100 things happening in London right now.<br></br>
+         Every day could be new.
         </p>
       </div>
 
@@ -32,11 +32,10 @@ const AfterSubmitPage: React.FC = () => {
         </h1>
       </div>
 
-      <div className="after-footer">
-        <p className="footer-question">
-          send to a friend<span className="question-mark">?</span>
+      <div className="after-footer fade-in">
+        <p className="footer-question ">
+          send to a friend<span className="question-mark1">?</span>
         </p>
-        <p className="footer-email">email here</p>
       </div>
     </div>
   );

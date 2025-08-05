@@ -105,11 +105,21 @@ const EmailPage: React.FC = () => {
           </div>
           <div ref={caretRef} className="custom-caret"></div>
         </div>
+<button
+  type="button"
+  className="join-text"
+  onClick={() => {
+    navigate('/aftersubmit'); // ✅ Just navigate to the next page
+  }}
+  style={{ fontSize: isMobile ? "90px" : "150px" }}
+>
+  join<span className="question-mark">?</span>
+</button>
 
 
         
 
-        <button 
+        {/* <button 
   type="button"
   className="join-text"
   onClick={async () => {
@@ -138,9 +148,7 @@ const EmailPage: React.FC = () => {
   style={{ fontSize: isMobile ? "90px" : "150px" }}
 >
   join<span className="question-mark">?</span>
-</button>
-
-
+</button> */}
       </form>
     </div>
   );
