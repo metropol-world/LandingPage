@@ -43,7 +43,7 @@ textCtx.textBaseline = "middle";
 textCtx.fillText("want in?", cols / 2, rows / 2 + 5);
 
     const imageData = textCtx.getImageData(0, 0, cols, rows).data;
-    const spreadFactor = 0.055;
+    const spreadFactor = 0.05;
 
     const particles: any[] = [];
     const originalPositions: any[] = [];
@@ -85,7 +85,6 @@ textCtx.fillText("want in?", cols / 2, rows / 2 + 5);
 
     // === Events (Mouse + Touch) ===
     const handleMouseMove = (e: MouseEvent) => {
-         e.preventDefault();
       mouseRef.current.x = e.clientX;
       mouseRef.current.y = e.clientY;
     };
@@ -97,16 +96,15 @@ textCtx.fillText("want in?", cols / 2, rows / 2 + 5);
       }
     };
 
-    const handleTouchEnd = (e: TouchEvent) => {
-      e.preventDefault();
+    const handleTouchEnd = () => {
       mouseRef.current.x = -9999;
       mouseRef.current.y = -9999;
     };
 
- canvas.addEventListener("mousemove", handleMouseMove);
-  canvas.addEventListener("touchmove", handleTouchMove, { passive: false });
-  canvas.addEventListener("touchend", handleTouchEnd, { passive: false });
-  canvas.addEventListener("touchcancel", handleTouchEnd, { passive: false });
+    canvas.addEventListener("mousemove", handleMouseMove);
+    canvas.addEventListener("touchmove", handleTouchMove);
+    canvas.addEventListener("touchend", handleTouchEnd);
+    canvas.addEventListener("touchcancel", handleTouchEnd);
 
     // === Animation Loop ===
     const animate = () => {
@@ -115,7 +113,8 @@ textCtx.fillText("want in?", cols / 2, rows / 2 + 5);
 
       const hoverRadius = isMobile ? 50 : 20;
       const pushForce = 100;
-      const spreadMultiplier = 1;
+      const spreadMultiplier = 1; 
+      const pixelSize = isMobile ? 3.5 : 4;  
       const returnSpeed = 0.016;
       const jumpStep = 10;
       const snapThreshold = 2;
