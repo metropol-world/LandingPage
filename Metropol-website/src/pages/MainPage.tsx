@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import gsap from 'gsap';
 import '../App.css';
@@ -7,49 +7,66 @@ const MainPage: React.FC = () => {
   const navigate = useNavigate();
   const logoRef = useRef<HTMLImageElement | null>(null);
   const logoPosRef = useRef(0);
-  const isMobile = window.innerWidth <= 768; 
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   useEffect(() => {
-    if (isMobile) return; 
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
-const handleWheel = (event: WheelEvent) => {
-  if (event.deltaX !== 0 || event.deltaY !== 0) {
-    // Invert both scroll directions
-    logoPosRef.current -= (event.deltaY + event.deltaX) * 0.35;
+  useEffect(() => {
+    if (isMobile) return;
 
-    const minPos = -window.innerWidth * 2.2;
-    if (logoPosRef.current < minPos) logoPosRef.current = minPos;
+    const minPos = -window.innerWidth * 2.2; // how far left the logo can go
+    const maxPos = 0; // starting point
 
-    if (logoRef.current) {
-      gsap.killTweensOf(logoRef.current);
+    const updateLogoPosition = (pos: number) => {
+      logoPosRef.current = Math.max(minPos, Math.min(maxPos, pos));
+      if (logoRef.current) {
+        gsap.to(logoRef.current, {
+          x: logoPosRef.current,
+          ease: "power1.out",
+          duration: 0.1
+        });
+      }
+      // Trigger page change when fully left
+      if (logoPosRef.current <= minPos) {
+        setTimeout(() => {
+          navigate('/second');
+        }, 500);
+      }
+    };
 
-      gsap.to(logoRef.current, {
-        x: logoPosRef.current,
-        ease: "power1.out",
-        duration: 0 
-      });
-    }
+    // Mouse wheel scroll (vertical gestures controlling horizontal movement)
+    const handleWheel = (event: WheelEvent) => {
+      const deltaX = event.deltaX || event.deltaY; // support trackpad horizontal
+      updateLogoPosition(logoPosRef.current - deltaX * 0.35);
+    };
 
+    // Horizontal scrollbar movement (if scrollbar is visible)
+    const handleScroll = () => {
+      updateLogoPosition(-window.scrollX);
+    };
 
-    if (logoPosRef.current <= minPos) {
-      setTimeout(() => {
-        navigate('/second');
-      }, 500);
-    }
-  }
-};
+    window.addEventListener('wheel', handleWheel, { passive: true });
+    window.addEventListener('scroll', handleScroll, { passive: true });
 
-
-    window.addEventListener('wheel', handleWheel);
     return () => {
       window.removeEventListener('wheel', handleWheel);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, [navigate, isMobile]);
 
   return (
     <div
       className="main-page"
-      onClick={() => isMobile && navigate('/second')}
+      onClick={() => {
+        if (isMobile) navigate('/second');
+      }}
+      style={{ overflow: 'hidden' }} // no page scroll, only logo moves
     >
       <img
         ref={logoRef}
