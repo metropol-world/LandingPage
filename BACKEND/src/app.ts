@@ -4,7 +4,7 @@ import emailRouter from "./models/email/email.router";
 import cors from "cors";
 
 const app = express();
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT ? parseInt(process.env.PORT) : 8080;
 
 app.use(express.json());
 app.use(cors());
@@ -14,6 +14,6 @@ app.get("/healthcheck", (req: Request, res: Response) => {
   return res.sendStatus(200);
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`App is running on http://localhost:${PORT}`);
 });
