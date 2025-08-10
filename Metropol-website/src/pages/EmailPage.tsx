@@ -109,7 +109,7 @@ const EmailPage: React.FC = () => {
   type="button"
   className="join-text"
   onClick={() => {
-    navigate('/aftersubmit'); // ✅ Just navigate to the next page
+    navigate('/aftersubmit');
   }}
   style={{ fontSize: isMobile ? "90px" : "150px" }}
 >

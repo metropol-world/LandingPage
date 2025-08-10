@@ -78,6 +78,20 @@ h1 {
 /* ================================
    Desktop Only Styling
    ================================ */
+
+.main-logo {
+  position: absolute;          /* or fixed if you prefer */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* GSAP will add translateX for x */
+  will-change: transform;
+  z-index: 100;
+  pointer-events: none;
+}
+
+
+
+
 .desktop-only {
   display: block;
   width: 4036px;
@@ -87,7 +101,7 @@ h1 {
   object-fit: contain;
 
   position: absolute;
-  left: 33%;
+  left: 10%;
   top: 55%;
   transform: translate(-400px, -50%);
 }
