@@ -690,15 +690,24 @@ h1 {
   }
 
   .after-main-text {
-    bottom: 0;
-    transform: translate(-70px,-400px);
-    padding-left: 100px;
+    position: absolute;
+    left: 33px;                 /* ✅ X = 33 */
+    top: 358px;                 /* ✅ Y ≈ 358 (tweak if needed) */
+    width: 295px;               /* ✅ W = 295 */
     max-width: 295px;
+    bottom: auto;
+    right: auto;
+    padding-left: 0;            /* remove desktop padding */
+    transform: none;            /* kill old translate */
   }
 
   .after-main-text h1 {
-    font-size: 40px;
-    line-height: 44px;
+    font-size: 40px;            /* ✅ 40 */
+    line-height: 44px;          /* ✅ 44 */
+    margin: 0;
+    text-align: left;
+    white-space: normal;
+    word-break: keep-all;
     transform: none;
   }
 

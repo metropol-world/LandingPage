@@ -4,10 +4,9 @@ const AfterSubmitPage: React.FC = () => {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    // Trigger the background transition after a slight delay
     const timer = setTimeout(() => {
       setLoaded(true);
-    }, 20); // delay ensures React renders red first
+    }, 20); 
     return () => clearTimeout(timer);
   }, []);
 
@@ -32,11 +31,33 @@ const AfterSubmitPage: React.FC = () => {
         </h1>
       </div>
 
-      <div className="after-footer fade-in">
-        <p className="footer-question ">
-          send to a friend<span className="question-mark1">?</span>
-        </p>
-      </div>
+    <div className="after-footer fade-in">
+  <p
+    className="footer-question"
+    onClick={async () => {
+      const shareData = {
+        title: "Metropol",
+        text: "Check this out!",
+        url: window.location.href
+      };
+
+      try {
+        if (navigator.share) {
+          await navigator.share(shareData);
+        } else {
+          await navigator.clipboard.writeText(window.location.href);
+          alert("Link copied to clipboard!");
+        }
+      } catch (err) {
+        console.error("Share failed:", err);
+      }
+    }}
+    style={{ cursor: "pointer" }}
+  >
+    send to a friend<span className="question-mark1">?</span>
+  </p>
+</div>
+
     </div>
   );
 };
