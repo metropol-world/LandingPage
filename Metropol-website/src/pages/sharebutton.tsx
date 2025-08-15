@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 
 type Props = {
-  url?: string;        // optional: pass a custom URL, else uses window.location.href
-  title?: string;      // used by Web Share
-  text?: string;       // used by Web Share
+  url?: string;        
+  title?: string;      
+  text?: string;     
   className?: string;
 };
 
@@ -18,7 +18,6 @@ const ShareButton: React.FC<Props> = ({ url, title = "Check this out", text = ""
 
   const copyFallback = async () => {
     try {
-      // Fallback for older browsers
       const ta = document.createElement("textarea");
       ta.value = link;
       ta.setAttribute("readonly", "");
@@ -36,12 +35,10 @@ const ShareButton: React.FC<Props> = ({ url, title = "Check this out", text = ""
 
   const handleShare = async () => {
     try {
-      // Mobile share sheet (if supported)
       if (navigator.share) {
         await navigator.share({ title, text, url: link });
         return;
       }
-      // Modern clipboard API (requires HTTPS or localhost)
       if (navigator.clipboard?.writeText) {
         await navigator.clipboard.writeText(link);
         show("copied");
@@ -55,7 +52,7 @@ const ShareButton: React.FC<Props> = ({ url, title = "Check this out", text = ""
 
   return (
     <button onClick={handleShare} className={`share-btn ${className ?? ""}`} aria-live="polite">
-      {msg === "copied" ? "Link copied ✔️" : msg === "error" ? "Copy failed ❗" : "Share / Copy Link"}
+      {msg === "copied" ? "Link copied ✔️" : msg === "error" ? "Copy failed" : "Share / Copy Link"}
     </button>
   );
 };

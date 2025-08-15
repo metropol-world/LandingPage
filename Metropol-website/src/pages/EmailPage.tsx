@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import GraphemeSplitter from 'grapheme-splitter';
 
 const EmailPage: React.FC = () => {
   const navigate = useNavigate();
@@ -31,12 +32,29 @@ const EmailPage: React.FC = () => {
     }
   };
 
-  const displayText = email.split('').map((char, i) => {
-    if (char === '@') {
-      return <span key={i} style={{ fontFamily: 'Arial, sans-serif' }}>@</span>;
-    }
-    return <span key={i}>{char}</span>;
-  });
+const segments: string[] = (() => {
+  const hasSeg = typeof (Intl as any)?.Segmenter !== 'undefined';
+  if (hasSeg) {
+    const seg = new (Intl as any).Segmenter(undefined, { granularity: 'grapheme' });
+    return Array.from(seg.segment(email), (s: any) => s.segment);
+  } else {
+    const splitter = new GraphemeSplitter();
+    return splitter.splitGraphemes(email);
+  }
+})();
+
+const fallbackChars = '*()+=!@#$%^&';
+
+const displayText = segments.map((g, i) => {
+  const isFallback = fallbackChars.includes(g);
+  return (
+    <span key={i} className={isFallback ? 'fallback-symbol' : ''}>
+      {g}
+    </span>
+  );
+});
+
+
 
   useEffect(() => {
     if (inputRef.current) {
@@ -105,19 +123,30 @@ const EmailPage: React.FC = () => {
           </div>
           <div ref={caretRef} className="custom-caret"></div>
         </div>
+
 <button
   type="button"
   className="join-text"
-  onClick={() => {
-    navigate('/aftersubmit');
+  onClick={() => navigate('/aftersubmit')}
+  style={{
+    background: 'none',
+    border: 'none',
+    padding: 0,
+    margin: 0,
+    cursor: 'pointer'
   }}
-  style={{ fontSize: isMobile ? "90px" : "150px" }}
+  aria-label="Submit email"
 >
-  join<span className="question-mark">?</span>
+<img
+  src="/metropol-logo/arrow.png"
+  alt="Join"
+  className={isMobile ? 'arrow-img-mobile' : 'arrow-img-desktop'}
+/>
+
+
+
 </button>
 
-
-        
 
         {/* <button 
   type="button"

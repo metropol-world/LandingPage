@@ -336,7 +336,7 @@ h1 {
 .email-form {
   position: absolute;
   bottom: 180px;
-  right: 100px;
+  right: 160px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -417,6 +417,9 @@ h1 {
   51%, 100% { opacity: 0; }
 }
 
+.fallback-symbol {
+  font-family: Arial, sans-serif !important;
+}
 
 .email-display {
   position: absolute;
@@ -424,12 +427,13 @@ h1 {
   left: 0;
   font-size: 192px;
   font-weight: bold;
-  font-family: 'ElzaTrial', sans-serif;
+  font-family: 'ElzaTrial', Arial, sans-serif;
   color: rgba(0, 0, 0, 0.2);
   white-space: nowrap;
   transform-origin: left center;
   pointer-events: none;
 }
+
 .placeholder-text {
   position: absolute;
   top: 0;
@@ -437,14 +441,24 @@ h1 {
   font-size: 192px;
   font-weight: bold;
   font-family: 'ElzaTrial', Arial, sans-serif;
-  color: rgba(0, 0, 0, 0.105);
+  color: rgba(0, 0, 0, 0.311);
   white-space: nowrap;
   pointer-events: none;
   user-select: none;
 }
 
+.arrow-img-desktop {
+  display: block;
+  position: relative;
+  object-fit: contain;
+  width: 471px;
+  height: 119px;
+  top: 80px;
+  left: 40px;
+}
 
-.join-text {
+
+/* .join-text {
   margin-top: 40px;
   font-size: 150px;
   font-family: 'ElzaTrial', sans-serif;
@@ -455,7 +469,7 @@ h1 {
   cursor: pointer;
   line-height: 1;
    transform: translate(60px, 100px);
-}
+} */
 
 
 @keyframes fadeInOrder {
@@ -516,16 +530,18 @@ h1 {
   }
 
 
-  .email-form {
-    position: static;
-    width: 100%;
-    align-items: flex-start;
-    transform: none;
-    margin-top: 140px;
-    
-  }
+.email-form {
+  position: relative; 
+  width: 100%;
+  align-items: flex-start;
+  transform: none;
+  margin-top: 200px;
+  top: -100px; 
+  right: 10px;
+}
 
-  
+
+
   .dotted-input-wrapper {
     transform: translate(18px,-183px);
     width: 90%;
@@ -558,12 +574,23 @@ h1 {
     height: 12px;
   }
 
-  .join-text {
-    text-align: right;
-    font-size: 90px;
-    transform: translate(180px, -179px);
-  }
+  .email-display span.at-char {
+  font-family: 'Arial, sans-serif';
 }
+
+
+.arrow-img-mobile {
+  width: 200px;
+  height: auto;
+  display: block;
+  position: relative;
+  z-index: 10;
+  top: -70px;
+  right: -135px;
+}
+
+}
+
 
 
 
