@@ -450,7 +450,7 @@ h1 {
 }
 
 .join-text {
-  all: unset; /* This resets all default button styles */
+  all: unset; 
   display: block;
   position: relative;
   cursor: pointer;

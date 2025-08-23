@@ -7,34 +7,43 @@ const AnimatedPixelText: React.FC = () => {
   const mouseRef = useRef({ x: -9999, y: -9999 });
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
 
     
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-        const isMobile = width <= 768;
-    canvas.width = width;
-    canvas.height = height;
 
-    const pixelSize = isMobile ? 3.5 : 4;
-    const rows = 120;
-    const cols = 400;
+  const canvas = canvasRef.current;
+  if (!canvas) return;
+
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  const isMobile = width <= 768;
+
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = width * dpr;
+  canvas.height = height * dpr;
+  canvas.style.width = `${width}px`;
+  canvas.style.height = `${height}px`;
+
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+  ctx.scale(dpr, dpr);
+
+const pixelSize = isMobile ? 2.5 : 4;
+const rows = isMobile ? 80 : 120;
+const cols = isMobile ? 220 : 400;
 
 
 
-    const textOffsetX = isMobile ? width / 2 - 10 : width / 2; 
-    const textOffsetY = isMobile ? height / 2 - 10: height / 2; 
+    const textOffsetX = width / 2;
+const textOffsetY = isMobile ? height / 2 - 30 : height / 2;
+
 
     const textCanvas = document.createElement("canvas");
     textCanvas.width = cols;
     textCanvas.height = rows;
     const textCtx = textCanvas.getContext("2d")!;
 
-const fontSize = isMobile ? 22 : 80;
+const fontSize = isMobile ? 28 : 80;
+
 
 textCtx.fillStyle = "black";
 textCtx.font = `${fontSize}px Arial, sans-serif`;
@@ -116,7 +125,7 @@ textCtx.fillText("want in?", cols / 2, rows / 2 + 5);
       const spreadMultiplier = 1; 
       const pixelSize = isMobile ? 3.5 : 4;  
       const returnSpeed = 0.016;
-      const jumpStep = 10;
+      const jumpStep = isMobile ? 4 : 10;
       const snapThreshold = 2;
 
       particles.forEach((p) => {
