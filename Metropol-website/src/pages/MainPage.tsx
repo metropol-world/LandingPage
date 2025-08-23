@@ -89,7 +89,7 @@ const MainPage: React.FC = () => {
     return d;
   };
 
-  const SENS = 0.25; 
+  const SENS = 0.35; 
   const clamp = (v: number) => Math.max(minPos, Math.min(maxPos, v));
 
 const onWheel = (e: WheelEvent) => {
