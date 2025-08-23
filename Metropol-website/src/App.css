@@ -341,7 +341,9 @@ h1 {
   flex-direction: column;
   align-items: flex-end;
  transform: translateY(30px);
+  background: transparent;
 }
+
 
 /* ================================
    Dotted Input Wrapper
@@ -447,29 +449,31 @@ h1 {
   user-select: none;
 }
 
-.arrow-img-desktop {
+.join-text {
+  all: unset; /* This resets all default button styles */
   display: block;
   position: relative;
-  object-fit: contain;
+  cursor: pointer;
+  width: fit-content;
+  height: fit-content;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+
+.arrow-img-desktop {
   width: 471px;
   height: 119px;
-  top: 80px;
+  position: relative;
+  top: 100px;
   left: 40px;
 }
 
 
-/* .join-text {
-  margin-top: 40px;
-  font-size: 150px;
-  font-family: 'ElzaTrial', sans-serif;
-  font-weight: bold;
-  color: white;
-  background: none;
-  border: none;
-  cursor: pointer;
-  line-height: 1;
-   transform: translate(60px, 100px);
-} */
+
 
 
 @keyframes fadeInOrder {
@@ -577,16 +581,27 @@ h1 {
   .email-display span.at-char {
   font-family: 'Arial, sans-serif';
 }
+  .arrow-img-mobile {
+    width: 180px;      /* 🔧 Slightly smaller than before */
+    height: auto;
+    position: relative;
+    top: -130px;
+    right: -165px;
+  }
 
 
+
+
+
+.arrow-img-desktop,
 .arrow-img-mobile {
-  width: 200px;
-  height: auto;
   display: block;
-  position: relative;
-  z-index: 10;
-  top: -70px;
-  right: -135px;
+  object-fit: contain;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
 }

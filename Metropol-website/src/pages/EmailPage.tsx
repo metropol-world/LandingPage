@@ -47,7 +47,7 @@ const EmailPage: React.FC = () => {
     }
   })();
 
-  const fallbackChars = "*()+=!@#$%^&";
+  const fallbackChars = "*()+=!@#$%^&_-{}[]|:;\"'<>,.?/`~\\";
 
   const displayText = segments.map((g, i) => {
     const isFallback = fallbackChars.includes(g);
@@ -147,41 +147,42 @@ const EmailPage: React.FC = () => {
   aria-label="Submit email"
 > */}
 
-        {/* </button> */}
+      <img
+  src="/metropol-logo/arrow.png"
+  alt="Join"
+  onClick={async () => {
+    if (!email.trim()) return;
 
-        <button
-          type="button"
-          className="join-text"
-          onClick={async () => {
-            if (!email.trim()) return;
+    try {
+      const response = await fetch(`/api/email`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
 
-            try {
-              const response = await fetch(`/api/email`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email }),
-              });
+      console.log("📡 Status:", response.status);
 
-              console.log("📡 Status:", response.status);
+      if (response.ok) {
+        console.log("✅ Email saved successfully!");
+        navigate("/aftersubmit");
+      } else {
+        const data = await response.json();
+        console.error("❌ Failed:", data.error);
+      }
+    } catch (error) {
+      console.error("❌ Network error:", error);
+    }
+  }}
+  style={{
+    background: "none",
+    boxShadow: "none",
+    display: "block",
+    cursor: "pointer",
+  }}
+  className={isMobile ? "arrow-img-mobile" : "arrow-img-desktop"}
+/>
 
-              if (response.ok) {
-                console.log("✅ Email saved successfully!");
-                navigate("/aftersubmit");
-              } else {
-                const data = await response.json();
-                console.error("❌ Failed:", data.error);
-              }
-            } catch (error) {
-              console.error("❌ Network error:", error);
-            }
-          }}
-        >
-          <img
-            src="/metropol-logo/arrow.png"
-            alt="Join"
-            className={isMobile ? "arrow-img-mobile" : "arrow-img-desktop"}
-          />
-        </button>
+
       </form>
     </div>
   );
