@@ -49,7 +49,7 @@ textCtx.fillStyle = "black";
 textCtx.font = `${fontSize}px Arial, sans-serif`;
 textCtx.textAlign = "center";
 textCtx.textBaseline = "middle";
-textCtx.fillText("want in?", cols / 2, rows / 2 + 5);
+textCtx.fillText("you in?", cols / 2, rows / 2 + 5);
 
     const imageData = textCtx.getImageData(0, 0, cols, rows).data;
     const spreadFactor = 0.05;

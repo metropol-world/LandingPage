@@ -46,7 +46,7 @@ const SecondPage: React.FC = () => {
       }}
     >
       <h1 className="second-heading fade-in3">
-        want in
+        you in
         <span className="question-mark">?</span>
       </h1>
     </button>
