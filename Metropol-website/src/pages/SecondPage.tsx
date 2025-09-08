@@ -5,9 +5,6 @@ import gsap from "gsap";
 
 
 
-
-
-
 const SecondPage: React.FC = () => {
   const navigate = useNavigate();
 
@@ -31,7 +28,7 @@ const SecondPage: React.FC = () => {
              
       <button 
      onClick={(e) => {
-          e.stopPropagation(); // ✅ Prevent parent div from blocking button clicks
+          e.stopPropagation(); 
           navigate('/email');
         }}
       style={{

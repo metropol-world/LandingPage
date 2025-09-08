@@ -96,20 +96,21 @@ const EmailPage: React.FC = () => {
 
   return (
     <div className="email-page">
-      <div className="email-left fade-step1">
-        <img
-          src="/metropol-logo/Metropol_Logo_Full_Black.png"
-          alt="Metropol Logo"
-          className="email-logo"
-        />
-        <p className="email-paragraph">
-          We<span className="question-mark1">'</span>re better in person.
-          <br></br>
-          There<span className="question-mark1">'</span>s a 100 things happening
-          in London right now.<br></br>
-          Every day could be new.
-        </p>
-      </div>
+    <div className="email-left fade-step1">
+      <img
+        src="/metropol-logo/Metropol_Logo_Full_Black.png"
+        alt="Metropol Logo"
+        className="email-logo"
+      />
+      <p className="email-paragraph">
+        We're better in person.
+        <br />
+        A hundred things are happening in London right now.<br />
+        <br />  <br />
+        Every day could be new.
+      </p>
+    </div>
+
 
       <form className="email-form fade-step2">
         <div className="dotted-input-wrapper">

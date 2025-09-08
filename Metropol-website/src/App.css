@@ -26,9 +26,34 @@
   font-weight: normal;
   font-style: normal;
 }
+
+@font-face {
+  font-family: "HelveticaNowText-ExtraLight";
+  src: url("./font/HelveticaNowText-ExtraLight.ttf") format("truetype");
+  font-weight: 200;
+  font-style: normal;
+}
+
+
 .email-display, .email-input {
   font-family: 'ElzaTrial', Arial, sans-serif;
 }
+
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: black;
+    color: white;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  body {
+    background-color: white;
+    color: black;
+  }
+}
+
 
 
 
@@ -323,7 +348,7 @@ h1 {
 .email-paragraph {
   color: white;
   font-weight: bold;
-  font-family: 'SilvaTextTrial', sans-serif;
+  font-family: 'HelveticaNowText-ExtraLight', sans-serif;
   font-size: 24px;
   line-height: 1.2;
   max-width: 320px;
@@ -651,9 +676,10 @@ h1 {
   font-size: 24px;
   color: #D60000;
   font-weight: bold;
-  font-family: 'SilvaTextTrial', sans-serif;
+  font-family: 'HelveticaNowText-ExtraLight', sans-serif;
+  font-size: 24px;
   line-height: 1.2;
-  max-width: 320px;
+  max-width: 326px;
   margin: 0;
 }
 
@@ -672,7 +698,7 @@ h1 {
 }
 
 .after-main-text h1 {
-  font-size: 192px;
+  font-size: 162px;
   color: #E30613;
   margin: 0;
   text-align: left;
@@ -763,8 +789,8 @@ h1 {
   }
 
   .footer-question {
-    font-size: 16px;
-    transform: translate(60px,-95px);
+    font-size: 40px;
+    transform: translate(20px,-195px);
   }
 
   .footer-question .question-mark {

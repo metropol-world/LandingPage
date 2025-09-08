@@ -27,14 +27,14 @@ const AnimatedPixelText: React.FC = () => {
   if (!ctx) return;
   ctx.scale(dpr, dpr);
 
-const pixelSize = isMobile ? 2.5 : 4;
+const pixelSize = isMobile ? 4 : 4;
 const rows = isMobile ? 80 : 120;
 const cols = isMobile ? 220 : 400;
 
 
 
     const textOffsetX = width / 2;
-const textOffsetY = isMobile ? height / 2 - 30 : height / 2;
+const textOffsetY = isMobile ? height / 2 - 20 : height / 2;
 
 
     const textCanvas = document.createElement("canvas");
