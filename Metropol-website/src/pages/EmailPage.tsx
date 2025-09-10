@@ -94,6 +94,31 @@ const EmailPage: React.FC = () => {
     }
   }, [email, isMobile]);
 
+  const handleSubmit = async () => {
+  if (!email.trim()) return;
+
+  try {
+    const response = await fetch(`/api/email`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+    });
+
+    console.log("📡 Status:", response.status);
+
+    if (response.ok) {
+      console.log("✅ Email saved successfully!");
+      navigate("/aftersubmit");
+    } else {
+      const data = await response.json();
+      console.error("❌ Failed:", data.error);
+    }
+  } catch (error) {
+    console.error("❌ Network error:", error);
+  }
+};
+
+
   return (
     <div className="email-page">
     <div className="email-left fade-step1">
@@ -111,80 +136,50 @@ const EmailPage: React.FC = () => {
       </p>
     </div>
 
+<form
+  className="email-form fade-step2"
+  onSubmit={(e) => {
+    e.preventDefault(); 
+    handleSubmit();
+  }} 
+  //PRESS ENTER ADDED!
+>
+  <div className="dotted-input-wrapper">
+    <input
+      ref={inputRef}
+      type="text"
+      value={email}
+      onChange={(e) => setEmail(e.target.value)}
+      className="email-input"
+      spellCheck={false}
+    />
+    {!email && <span className="placeholder-text">email</span>}
+    <span ref={displayRef} className="email-display">
+      {displayText.length ? displayText : ""}
+    </span>
+    <div className="dotted-line">
+      {Array.from({ length: 12 }).map((_, i) => (
+        <div className="cube" key={i}></div>
+      ))}
+    </div>
+    <div ref={caretRef} className="custom-caret"></div>
+  </div>
 
-      <form className="email-form fade-step2">
-        <div className="dotted-input-wrapper">
-          <input
-            ref={inputRef}
-            type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="email-input"
-            spellCheck={false}
-          />
-          {!email && <span className="placeholder-text">email</span>}
-          <span ref={displayRef} className="email-display">
-            {displayText.length ? displayText : ""}
-          </span>
-          <div className="dotted-line">
-            {Array.from({ length: 12 }).map((_, i) => (
-              <div className="cube" key={i}></div>
-            ))}
-          </div>
-          <div ref={caretRef} className="custom-caret"></div>
-        </div>
+  <button type="submit" style={{ display: "none" }}></button>
 
-        {/* <button
-  type="button"
-  className="join-text"
-  onClick={() => navigate('/aftersubmit')}
-  style={{
-    background: 'none',
-    border: 'none',
-    padding: 0,
-    margin: 0,
-    cursor: 'pointer'
-  }}
-  aria-label="Submit email"
-> */}
-
-      <img
-  src="/metropol-logo/arrow.png"
-  alt="Join"
-  onClick={async () => {
-    if (!email.trim()) return;
-
-    try {
-      const response = await fetch(`/api/email`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
-
-      console.log("📡 Status:", response.status);
-
-      if (response.ok) {
-        console.log("✅ Email saved successfully!");
-        navigate("/aftersubmit");
-      } else {
-        const data = await response.json();
-        console.error("❌ Failed:", data.error);
-      }
-    } catch (error) {
-      console.error("❌ Network error:", error);
-    }
-  }}
-  style={{
-    background: "none",
-    boxShadow: "none",
-    display: "block",
-    cursor: "pointer",
-  }}
-  className={isMobile ? "arrow-img-mobile" : "arrow-img-desktop"}
-/>
-
-
-      </form>
+  <img
+    src="/metropol-logo/arrow.png"
+    alt="Join"
+    onClick={handleSubmit}
+    style={{
+      background: "none",
+      boxShadow: "none",
+      display: "block",
+      cursor: "pointer",
+    }}
+    className={isMobile ? "arrow-img-mobile" : "arrow-img-desktop"}
+  />
+</form>
     </div>
   );
 };

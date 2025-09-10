@@ -29,7 +29,7 @@ const AfterSubmitPage: React.FC = () => {
 
       <div className="after-main-text">
         <h1>
-          everyday could <br /> be new<span className="question-mark">...</span>
+          every day could <br /> be new<span className="question-mark">...</span>
         </h1>
       </div>
 
@@ -56,7 +56,7 @@ const AfterSubmitPage: React.FC = () => {
     }}
     style={{ cursor: "pointer" }}
   >
-    send to a friend<span className="question-mark1">?</span>
+    tell a friend<span className="question-mark1">!</span>
   </p>
 </div>
 
