@@ -74,13 +74,17 @@ const MainPage: React.FC = () => {
 
   const maxPos = 0;
   const minPos = -window.innerWidth * 2.2;
-
-  logoPosRef.current = 0;
-  const targetPosRef = { current: 0 };
-
   const setX = gsap.quickSetter(el, "x", "px");
-  gsap.killTweensOf(el);
-  setX(0); 
+
+  let velocity = 0;
+  let pos = -(window.innerWidth * 0.35);
+  logoPosRef.current = pos;
+  setX(pos);
+
+  const SENS = 0.12;     
+  const FRICTION = 0.90; 
+  const EPSILON = 0.05;
+  const clamp = (v: number) => Math.max(minPos, Math.min(maxPos, v));
 
   const normDelta = (e: WheelEvent) => {
     let d = e.deltaX || e.deltaY;
@@ -89,45 +93,74 @@ const MainPage: React.FC = () => {
     return d;
   };
 
-  const SENS = 0.35; 
-  const clamp = (v: number) => Math.max(minPos, Math.min(maxPos, v));
+  const onWheel = (e: WheelEvent) => {
+    e.preventDefault();
+    const delta = normDelta(e);
+    velocity += -delta * SENS;
+  };
 
-const onWheel = (e: WheelEvent) => {
-  e.preventDefault();
-  const d = normDelta(e);
+  // ✅ Touch Support
+  let touchStartX = 0;
+  let touchLastX = 0;
 
-  logoPosRef.current = clamp(logoPosRef.current - d * SENS);
-  setX(logoPosRef.current);
-
-
-  if (logoPosRef.current <= minPos) {
-    if (logoRef.current) {
-      gsap.to(logoRef.current, {
-        opacity: 0,
-        duration: 0.6,
-        ease: "power2.out",
-        onComplete: () => {
-          navigate("/second");
-        }
-      });
+  const onTouchStart = (e: TouchEvent) => {
+    if (e.touches.length === 1) {
+      touchStartX = e.touches[0].clientX;
+      touchLastX = touchStartX;
     }
-  }
-};
+  };
 
+  const onTouchMove = (e: TouchEvent) => {
+    if (e.touches.length === 1) {
+      const currentX = e.touches[0].clientX;
+      const delta = currentX - touchLastX;
+      velocity += delta * SENS * 0.5;
+      touchLastX = currentX;
+    }
+  };
 
-  const onScroll = () => {
-    logoPosRef.current = clamp(-window.scrollX);
-    setX(logoPosRef.current);
+  const animate = () => {
+    if (Math.abs(velocity) > EPSILON) {
+      pos = clamp(pos + velocity);
+      setX(pos);
+      logoPosRef.current = pos;
+      velocity *= FRICTION;
+
+      if (pos <= minPos && logoRef.current) {
+        gsap.to(logoRef.current, {
+          opacity: 0,
+          duration: 0.6,
+          ease: "power2.out",
+          onComplete: () => void navigate("/second"),
+
+        });
+        return;
+      }
+
+      requestAnimationFrame(animate);
+    } else {
+      velocity = 0;
+    }
+  };
+
+  const startAnimation = () => {
+    if (velocity !== 0) requestAnimationFrame(animate);
   };
 
   window.addEventListener("wheel", onWheel, { passive: false });
-  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("touchstart", onTouchStart, { passive: true });
+  window.addEventListener("touchmove", onTouchMove, { passive: false });
+
+  const interval = setInterval(startAnimation, 16);
 
   return () => {
     window.removeEventListener("wheel", onWheel);
-    window.removeEventListener("scroll", onScroll);
+    window.removeEventListener("touchstart", onTouchStart);
+    window.removeEventListener("touchmove", onTouchMove);
+    clearInterval(interval);
   };
 }, [navigate, isMobile]);
+
 
 
   return (
