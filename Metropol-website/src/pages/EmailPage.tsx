@@ -112,7 +112,7 @@ const handleSubmit = async () => {
 
     if (response.ok) {
       console.log("✅ Email saved successfully!");
-      setShowBlackArrow(true); // ✅ Only show black arrow when response.ok
+     
       navigate("/aftersubmit");
     } else {
       const data = await response.json();
@@ -181,7 +181,8 @@ const handleSubmit = async () => {
   src="/metropol-logo/arrow.png"
   alt="Join"
   onClick={() => {
-    handleSubmit();          
+    handleSubmit();     
+     setShowBlackArrow(true); // ✅ Only show black arrow when response.ok     
   }}
   className={isMobile ? "arrow-img-mobile" : "arrow-img-desktop"}
   style={{

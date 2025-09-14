@@ -597,7 +597,7 @@ h1 {
   align-items: flex-start;
   transform: none;
   margin-top: 200px;
-  top: -100px; 
+  top: -20px; 
   right: 10px;
 }
 
@@ -617,13 +617,13 @@ h1 {
   .email-display,
   .placeholder-text {
     font-size: 90px;
-    transform: translate(93px,10px);
+    transform: translate(80px,18px);
   }
 
   .custom-caret {
     width: 6px;
     height: 120px;
-    transform: translate(33px, 5px);
+    transform: translate(17px, 10px);
     transition: left 0.1s ease-in-out; /* smoother jump */
   }
 
@@ -645,8 +645,8 @@ h1 {
   width: 180px;
   height: auto;
   position: relative;
-  top: -130px;
-  right: -165px;
+  top: -200px;
+  right: -125px;
   z-index: 1;
 }
 
@@ -656,7 +656,7 @@ h1 {
   height: auto;
   z-index: 2;
 
-  transform: translate(165px, -174px); 
+  transform: translate(125px, -244px); 
 
   -webkit-mask-image: linear-gradient(to right, #000 0%, #000 100%);
   -webkit-mask-repeat: no-repeat;
