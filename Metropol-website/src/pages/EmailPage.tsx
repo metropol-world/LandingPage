@@ -98,7 +98,7 @@ const EmailPage: React.FC = () => {
     }
   }, [email, isMobile]);
 
-  const handleSubmit = async () => {
+const handleSubmit = async () => {
   if (!email.trim()) return;
 
   try {
@@ -112,6 +112,7 @@ const EmailPage: React.FC = () => {
 
     if (response.ok) {
       console.log("✅ Email saved successfully!");
+      setShowBlackArrow(true); // ✅ Only show black arrow when response.ok
       navigate("/aftersubmit");
     } else {
       const data = await response.json();
@@ -121,6 +122,7 @@ const EmailPage: React.FC = () => {
     console.error("❌ Network error:", error);
   }
 };
+
 
 
   return (
@@ -180,7 +182,6 @@ const EmailPage: React.FC = () => {
   alt="Join"
   onClick={() => {
     handleSubmit();          
-    setShowBlackArrow(true); 
   }}
   className={isMobile ? "arrow-img-mobile" : "arrow-img-desktop"}
   style={{
