@@ -437,6 +437,7 @@ h1 {
   background-color: black;
   animation: blink 1s infinite;
   transform: translate(60px, 10px);
+  transition: left 0.1s ease-in-out; /* smoother jump */
 }
 
 @keyframes blink {
@@ -620,11 +621,13 @@ h1 {
   }
 
   .custom-caret {
-    width: 12px;
+    width: 6px;
     height: 120px;
     transform: translate(33px, 5px);
+    transition: left 0.1s ease-in-out; /* smoother jump */
   }
 
+  
   .dotted-line {
     gap: 15px;
   }
