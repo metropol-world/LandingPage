@@ -15,6 +15,10 @@ const EmailPage: React.FC = () => {
   const caretWidth = isMobile ? 12 : 28;
   const startOffset = isMobile ? 0 : -50;
 
+  const [showBlackArrow, setShowBlackArrow] = useState(false);
+
+
+
   const updateCaretPosition = () => {
     if (inputRef.current && caretRef.current && displayRef.current) {
       const ctx = document.createElement("canvas").getContext("2d");
@@ -167,18 +171,35 @@ const EmailPage: React.FC = () => {
 
   <button type="submit" style={{ display: "none" }}></button>
 
+
+
+
+<div className="arrow-container">
+<img
+  src="/metropol-logo/arrow.png"
+  alt="Join"
+  onClick={() => {
+    handleSubmit();          
+    setShowBlackArrow(true); 
+  }}
+  className={isMobile ? "arrow-img-mobile" : "arrow-img-desktop"}
+  style={{
+    background: "none",
+    boxShadow: "none",
+    display: "block",
+    cursor: "pointer",
+  }}
+/>
+{showBlackArrow && (
   <img
-    src="/metropol-logo/arrow.png"
+    src="/metropol-logo/arrowblack.png"
     alt="Join"
-    onClick={handleSubmit}
-    style={{
-      background: "none",
-      boxShadow: "none",
-      display: "block",
-      cursor: "pointer",
-    }}
-    className={isMobile ? "arrow-img-mobile" : "arrow-img-desktop"}
+    className={isMobile ? "arrow-overlay-mobile" : "arrow-overlay-desktop"}
   />
+)}
+</div>
+
+
 </form>
     </div>
   );
