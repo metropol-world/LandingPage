@@ -112,7 +112,7 @@ const handleSubmit = async () => {
 
     if (response.ok) {
       console.log("✅ Email saved successfully!");
-     
+      setShowBlackArrow(true);  
       navigate("/aftersubmit");
     } else {
       const data = await response.json();
@@ -182,7 +182,6 @@ const handleSubmit = async () => {
   alt="Join"
   onClick={() => {
     handleSubmit();     
-     setShowBlackArrow(true); // ✅ Only show black arrow when response.ok     
   }}
   className={isMobile ? "arrow-img-mobile" : "arrow-img-desktop"}
   style={{
