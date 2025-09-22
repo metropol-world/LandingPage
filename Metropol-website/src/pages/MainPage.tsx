@@ -8,7 +8,7 @@ const MainPage: React.FC = () => {
   const logoRef = useRef<HTMLImageElement | null>(null);
   const logoPosRef = useRef(0);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-  const goSecond = () => { navigate("/second"); };
+  const goSecond = () => { navigate("/email"); };
 
   useEffect(() => {
   if (isMobile) return;
@@ -131,7 +131,7 @@ const MainPage: React.FC = () => {
           opacity: 0,
           duration: 0.6,
           ease: "power2.out",
-          onComplete: () => void navigate("/second"),
+          onComplete: () => void navigate("/email"),
 
         });
         return;
@@ -167,7 +167,7 @@ const MainPage: React.FC = () => {
     <div
       className="main-page"
       onClick={() => {
-        if (isMobile) navigate('/second');
+        if (isMobile) navigate('/email');
       }}
       style={{ overflow: 'hidden' }} 
     >

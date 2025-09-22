@@ -42,7 +42,7 @@ if (window.location.hash !== '#/') {
       <AutoRedirect />
       <Routes>
         <Route path="/" element={<MainPage />} />
-        <Route path="/second" element={<SecondPage />} />
+        {/* <Route path="/second" element={<SecondPage />} /> */}
         <Route path="/email" element={<EmailPage />} />
         <Route path="/" element={<EmailPage />} />
         <Route path="/aftersubmit" element={<AfterSubmitPage />} />
