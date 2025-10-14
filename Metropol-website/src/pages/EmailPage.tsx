@@ -17,8 +17,6 @@ const EmailPage: React.FC = () => {
 
   const [showBlackArrow, setShowBlackArrow] = useState(false);
 
-
-
   const updateCaretPosition = () => {
     if (inputRef.current && caretRef.current && displayRef.current) {
       const ctx = document.createElement("canvas").getContext("2d");
@@ -98,110 +96,115 @@ const EmailPage: React.FC = () => {
     }
   }, [email, isMobile]);
 
-const handleSubmit = async () => {
-  if (!email.trim()) return;
+  // Use the email change to trigger a transition after 1 second
+  useEffect(() => {
+    if (email.trim()) {
+      const timer = setTimeout(() => {
+        navigate("/email"); // Redirect to the email page
+      }, 1000);
 
-  try {
-    const response = await fetch(`/api/email`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email }),
-    });
-
-    console.log("📡 Status:", response.status);
-
-    if (response.ok) {
-      console.log("✅ Email saved successfully!");
-      setShowBlackArrow(true);  
-      navigate("/aftersubmit");
-    } else {
-      const data = await response.json();
-      console.error("❌ Failed:", data.error);
+      return () => clearTimeout(timer); // Cleanup timer on component unmount
     }
-  } catch (error) {
-    console.error("❌ Network error:", error);
-  }
-};
+  }, [email, navigate]);
 
+  const handleSubmit = async () => {
+    if (!email.trim()) return;
 
+    try {
+      const response = await fetch(`/api/email`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      console.log("📡 Status:", response.status);
+
+      if (response.ok) {
+        console.log("✅ Email saved successfully!");
+        setShowBlackArrow(true);
+        navigate("/aftersubmit");
+      } else {
+        const data = await response.json();
+        console.error("❌ Failed:", data.error);
+      }
+    } catch (error) {
+      console.error("❌ Network error:", error);
+    }
+  };
 
   return (
     <div className="email-page">
-    <div className="email-left fade-step1">
-      <img
-        src="/metropol-logo/Metropol_Logo_Full_Black.png"
-        alt="Metropol Logo"
-        className="email-logo"
-      />
-      <p className="email-paragraph">
-        We're better in person.
-        <br />
-        A hundred things are happening in London right now.<br />
-        <br />  <br />
-        Every day could be new.
-      </p>
-    </div>
+      <div className="email-left fade-step1">
+        <img
+          src="/metropol-logo/Metropol_Logo_Full_Black.png"
+          alt="Metropol Logo"
+          className="email-logo"
+        />
+        <p className="email-paragraph">
+           Most people spend four hours online every day. 
+          <br />
+          In five minutes, find what you spent five years scrolling for.<br />
+          <br />  
+          Join the waitlist
+        </p>
+      </div>
 
-<form
-  className="email-form fade-step2"
-  onSubmit={(e) => {
-    e.preventDefault(); 
-    handleSubmit();
-  }} 
-  //PRESS ENTER ADDED!
->
-  <div className="dotted-input-wrapper">
-    <input
-      ref={inputRef}
-      type="text"
-      value={email}
-      onChange={(e) => setEmail(e.target.value)}
-      className="email-input"
-      spellCheck={false}
-    />
-    {!email && <span className="placeholder-text">email</span>}
-    <span ref={displayRef} className="email-display">
-      {displayText.length ? displayText : ""}
-    </span>
-    <div className="dotted-line">
-      {Array.from({ length: 12 }).map((_, i) => (
-        <div className="cube" key={i}></div>
-      ))}
-    </div>
-    <div ref={caretRef} className="custom-caret"></div>
-  </div>
+      <form
+        className="email-form fade-step2"
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit();
+        }}
+      >
+        <div className="dotted-input-wrapper">
+          <input
+            ref={inputRef}
+            type="text"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="email-input"
+            spellCheck={false}
+            placeholder="email"
+          />
+          <span ref={displayRef} className="email-display">
+            {displayText.length ? displayText : ""}
+          </span>
+          <div className="dotted-line">
+            {Array.from({ length: 12 }).map((_, i) => (
+              <div className="cube" key={i}></div>
+            ))}
+          </div>
+          <div ref={caretRef} className="custom-caret"></div>
+        </div>
 
-  <button type="submit" style={{ display: "none" }}></button>
+        <button type="submit" style={{ display: "none" }}></button>
 
-
-
-
-<div className="arrow-container">
-<img
-  src="/metropol-logo/arrow.png"
-  alt="Join"
-  onClick={() => {
-    handleSubmit();     
-  }}
-  className={isMobile ? "arrow-img-mobile" : "arrow-img-desktop"}
-  style={{
-    background: "none",
-    boxShadow: "none",
-    display: "block",
-    cursor: "pointer",
-  }}
-/>
-{showBlackArrow && (
-  <img
-    src="/metropol-logo/arrowblack.png"
-    alt="Join"
-    className={isMobile ? "arrow-overlay-mobile" : "arrow-overlay-desktop"}
-  />
-)}
-</div>
-
-
-</form>
+        <div className="arrow-container">
+          <img
+            src="/metropol-logo/arrow.png"
+            alt="Join"
+            onClick={() => {
+              handleSubmit();
+            }}
+            className={isMobile ? "arrow-img-mobile" : "arrow-img-desktop"}
+            style={{
+              background: "none",
+              boxShadow: "none",
+              display: "block",
+              cursor: "pointer",
+            }}
+          />
+          {showBlackArrow && (
+            <img
+              src="/metropol-logo/arrowblack.png"
+              alt="Join"
+              className={
+                isMobile ? "arrow-overlay-mobile" : "arrow-overlay-desktop"
+              }
+            />
+          )}
+        </div>
+      </form>
     </div>
   );
 };

@@ -19,12 +19,12 @@ const AfterSubmitPage: React.FC = () => {
           className="after-logo"
         />
         <p className="after-text">
-       We're better in person.
-        <br />
-        A hundred things are happening in London right now.<br />
-        <br />  
-        Every day could be new.
-      </p>
+          Most people spend four hours online every day. 
+          <br />
+          In five minutes, find what you spent five years scrolling for.<br />
+          <br />  
+          Join the waitlist
+        </p>
       </div>
 
       <div className="after-main-text">
@@ -33,32 +33,34 @@ const AfterSubmitPage: React.FC = () => {
         </h1>
       </div>
 
-    <div className="after-footer fade-in">
-  <p
-    className="footer-question"
-    onClick={async () => {
-      const shareData = {
-        title: "Metropol",
-        text: "Check this out!",
-        url: window.location.href
-      };
+      <div className="after-footer fade-in">
+        <p
+          className="footer-question"
+          onClick={async () => {
+            const shareData = {
+              title: "Metropol",
+              text: "Check this out!",
+              url: window.location.href
+            };
 
-      try {
-        if (navigator.share) {
-          await navigator.share(shareData);
-        } else {
-          await navigator.clipboard.writeText(window.location.href);
-          alert("Link copied to clipboard!");
-        }
-      } catch (err) {
-        console.error("Share failed:", err);
-      }
-    }}
-    style={{ cursor: "pointer" }}
-  >
-    tell a friend<span className="question-mark1">!</span>
-  </p>
-</div>
+            try {
+              if (navigator.share) {
+                // Check if the share API is available
+                await navigator.share(shareData);
+              } else {
+                // Fallback to clipboard if sharing isn't supported
+                await navigator.clipboard.writeText(window.location.href);
+                alert("Link copied to clipboard!");  // Alert that the link is copied
+              }
+            } catch (err) {
+              console.error("Share failed:", err);
+            }
+          }}
+          style={{ cursor: "pointer" }}
+        >
+          tell a friend
+        </p>
+      </div>
 
     </div>
   );
