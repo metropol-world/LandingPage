@@ -1,175 +1,194 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import gsap from 'gsap';
-import '../App.css';
+import React, { useRef, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import gsap from "gsap";
+import "../App.css";
 
 const MainPage: React.FC = () => {
   const navigate = useNavigate();
   const logoRef = useRef<HTMLImageElement | null>(null);
   const logoPosRef = useRef(0);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-  const goSecond = () => { navigate("/email"); };
 
+  const goSecond = () => void navigate("/email");
+
+  // ✅ Auto navigate after 1s on mobile (with fade)
   useEffect(() => {
-  if (isMobile) return;
-  const el = logoRef.current;
-  if (!el) return;
+    if (!isMobile) return;
+    const el = logoRef.current;
 
-  const maxPos = 0;
-  const minPos = -window.innerWidth * 2.2;
+    const timer = setTimeout(() => {
+      if (el) {
+        gsap.to(el, {
+          opacity: 0,
+          duration: 0.8,
+          ease: "power2.out",
+          onComplete: () => { void navigate("/email"); },
+        });
+      } else {
+        void navigate("/email");
+      }
+    }, 1000);
 
+    return () => clearTimeout(timer);
+  }, [isMobile, navigate]);
 
-  const START_X = -(window.innerWidth * 0.35);
-
-  const setX = gsap.quickSetter(el, "x", "px");
-  gsap.killTweensOf(el);
-  logoPosRef.current = START_X;
-  setX(START_X);
-
-  const normDelta = (e: WheelEvent) => {
-    let d = e.deltaX || e.deltaY;
-    if (e.deltaMode === 1) d *= 16;
-    else if (e.deltaMode === 2) d *= window.innerHeight;
-    return d;
-  };
-
-  const SENS = 0.1;
-  const clamp = (v: number) => Math.max(minPos, Math.min(maxPos, v));
-
-  const onWheel = (e: WheelEvent) => {
-    e.preventDefault();
-    const d = normDelta(e);
-    logoPosRef.current = clamp(logoPosRef.current - d * SENS);
-    setX(logoPosRef.current);
-
-    if (logoPosRef.current <= minPos && logoRef.current) {
-     gsap.to(logoRef.current!, {
-  opacity: 0,
-  duration: 1,
-  ease: "power2.out",
-  onComplete: goSecond
-});
-    }
-  };
-
-  const onScroll = () => {
-    logoPosRef.current = clamp(-window.scrollX);
-    setX(logoPosRef.current);
-  };
-
-  window.addEventListener("wheel", onWheel, { passive: false });
-  window.addEventListener("scroll", onScroll, { passive: true });
-
-  return () => {
-    window.removeEventListener("wheel", onWheel);
-    window.removeEventListener("scroll", onScroll);
-  };
-}, [navigate, isMobile]);
-
-
+  // ---------- Desktop scroll / wheel animation ----------
   useEffect(() => {
-  if (isMobile) return;
-  const el = logoRef.current;
-  if (!el) return;
+    if (isMobile) return;
+    const el = logoRef.current;
+    if (!el) return;
 
-  const maxPos = 0;
-  const minPos = -window.innerWidth * 2.2;
-  const setX = gsap.quickSetter(el, "x", "px");
+    const maxPos = 0;
+    const minPos = -window.innerWidth * 2.2;
+    const START_X = -(window.innerWidth * 0.35);
 
-  let velocity = 0;
-  let pos = -(window.innerWidth * 0.35);
-  logoPosRef.current = pos;
-  setX(pos);
+    const setX = gsap.quickSetter(el, "x", "px");
+    gsap.killTweensOf(el);
+    logoPosRef.current = START_X;
+    setX(START_X);
 
-  const SENS = 0.12;     
-  const FRICTION = 0.90; 
-  const EPSILON = 0.05;
-  const clamp = (v: number) => Math.max(minPos, Math.min(maxPos, v));
+    const normDelta = (e: WheelEvent) => {
+      let d = e.deltaX || e.deltaY;
+      if (e.deltaMode === 1) d *= 16;
+      else if (e.deltaMode === 2) d *= window.innerHeight;
+      return d;
+    };
 
-  const normDelta = (e: WheelEvent) => {
-    let d = e.deltaX || e.deltaY;
-    if (e.deltaMode === 1) d *= 16;
-    else if (e.deltaMode === 2) d *= window.innerHeight;
-    return d;
-  };
+    const SENS = 0.1;
+    const clamp = (v: number) => Math.max(minPos, Math.min(maxPos, v));
 
-  const onWheel = (e: WheelEvent) => {
-    e.preventDefault();
-    const delta = normDelta(e);
-    velocity += -delta * SENS;
-  };
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      const d = normDelta(e);
+      logoPosRef.current = clamp(logoPosRef.current - d * SENS);
+      setX(logoPosRef.current);
 
-  // ✅ Touch Support
-  let touchStartX = 0;
-  let touchLastX = 0;
-
-  const onTouchStart = (e: TouchEvent) => {
-    if (e.touches.length === 1) {
-      touchStartX = e.touches[0].clientX;
-      touchLastX = touchStartX;
-    }
-  };
-
-  const onTouchMove = (e: TouchEvent) => {
-    if (e.touches.length === 1) {
-      const currentX = e.touches[0].clientX;
-      const delta = currentX - touchLastX;
-      velocity += delta * SENS * 0.5;
-      touchLastX = currentX;
-    }
-  };
-
-  const animate = () => {
-    if (Math.abs(velocity) > EPSILON) {
-      pos = clamp(pos + velocity);
-      setX(pos);
-      logoPosRef.current = pos;
-      velocity *= FRICTION;
-
-      if (pos <= minPos && logoRef.current) {
+      if (logoPosRef.current <= minPos && logoRef.current) {
         gsap.to(logoRef.current, {
           opacity: 0,
-          duration: 0.6,
+          duration: 1,
           ease: "power2.out",
-          onComplete: () => void navigate("/email"),
-
+          onComplete: () => { void navigate("/email"); },
         });
-        return;
       }
+    };
 
-      requestAnimationFrame(animate);
-    } else {
-      velocity = 0;
-    }
-  };
+    const onScroll = () => {
+      logoPosRef.current = clamp(-window.scrollX);
+      setX(logoPosRef.current);
+    };
 
-  const startAnimation = () => {
-    if (velocity !== 0) requestAnimationFrame(animate);
-  };
+    window.addEventListener("wheel", onWheel, { passive: false });
+    window.addEventListener("scroll", onScroll, { passive: true });
 
-  window.addEventListener("wheel", onWheel, { passive: false });
-  window.addEventListener("touchstart", onTouchStart, { passive: true });
-  window.addEventListener("touchmove", onTouchMove, { passive: false });
+    return () => {
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, [navigate, isMobile]);
 
-  const interval = setInterval(startAnimation, 16);
+  // ---------- Desktop touch + momentum scroll ----------
+  useEffect(() => {
+    if (isMobile) return;
+    const el = logoRef.current;
+    if (!el) return;
 
-  return () => {
-    window.removeEventListener("wheel", onWheel);
-    window.removeEventListener("touchstart", onTouchStart);
-    window.removeEventListener("touchmove", onTouchMove);
-    clearInterval(interval);
-  };
-}, [navigate, isMobile]);
+    const maxPos = 0;
+    const minPos = -window.innerWidth * 2.2;
+    const setX = gsap.quickSetter(el, "x", "px");
 
+    let velocity = 0;
+    let pos = -(window.innerWidth * 0.35);
+    logoPosRef.current = pos;
+    setX(pos);
 
+    const SENS = 0.12;
+    const FRICTION = 0.9;
+    const EPSILON = 0.05;
+    const clamp = (v: number) => Math.max(minPos, Math.min(maxPos, v));
 
+    const normDelta = (e: WheelEvent) => {
+      let d = e.deltaX || e.deltaY;
+      if (e.deltaMode === 1) d *= 16;
+      else if (e.deltaMode === 2) d *= window.innerHeight;
+      return d;
+    };
+
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      const delta = normDelta(e);
+      velocity += -delta * SENS;
+    };
+
+    // ✅ Touch Support
+    let touchStartX = 0;
+    let touchLastX = 0;
+
+    const onTouchStart = (e: TouchEvent) => {
+      if (e.touches.length === 1) {
+        touchStartX = e.touches[0].clientX;
+        touchLastX = touchStartX;
+      }
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      if (e.touches.length === 1) {
+        const currentX = e.touches[0].clientX;
+        const delta = currentX - touchLastX;
+        velocity += delta * SENS * 0.5;
+        touchLastX = currentX;
+      }
+    };
+
+    const animate = () => {
+      if (Math.abs(velocity) > EPSILON) {
+        pos = clamp(pos + velocity);
+        setX(pos);
+        logoPosRef.current = pos;
+        velocity *= FRICTION;
+
+        if (pos <= minPos && logoRef.current) {
+          gsap.to(logoRef.current, {
+            opacity: 0,
+            duration: 0.6,
+            ease: "power2.out",
+            onComplete: () => { void navigate("/email"); },
+          });
+          return;
+        }
+
+        requestAnimationFrame(animate);
+      } else {
+        velocity = 0;
+      }
+    };
+
+    const startAnimation = () => {
+      if (velocity !== 0) requestAnimationFrame(animate);
+    };
+
+    window.addEventListener("wheel", onWheel, { passive: false });
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: false });
+
+    const interval = setInterval(startAnimation, 16);
+
+    return () => {
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+      clearInterval(interval);
+    };
+  }, [navigate, isMobile]);
+
+  // ---------- Render ----------
   return (
     <div
       className="main-page"
       onClick={() => {
-        if (isMobile) navigate('/email');
+        if (isMobile) void navigate("/email");
       }}
-      style={{ overflow: 'hidden' }} 
+      style={{ overflow: "hidden" }}
     >
       <img
         ref={logoRef}

@@ -141,11 +141,9 @@ const EmailPage: React.FC = () => {
           className="email-logo"
         />
         <p className="email-paragraph">
-           Most people spend four hours online every day. 
-          <br />
-          In five minutes, find what you spent five years scrolling for.<br />
-          <br />  
-          Join the waitlist
+  In five minutes, get what you spent five years scrolling for.
+  <br />
+  <span className="second-line">Join the waitlist</span>
         </p>
       </div>
 

@@ -344,6 +344,10 @@ h1 {
   width: 280px;
   margin-bottom: 20px;
 }
+.email-paragraph .second-line {
+  display: inline-block;
+  margin-top: 12px; /* adds visual space */
+}
 
 .email-paragraph {
   color: white;
@@ -722,6 +726,12 @@ h1 {
   width: 240px;
   margin-bottom: 19px;
 }
+
+.after-text .second-line {
+  display: inline-block;
+  margin-top: 12px; /* adds visual space */
+}
+
 
 .after-text {
   font-size: 24px;

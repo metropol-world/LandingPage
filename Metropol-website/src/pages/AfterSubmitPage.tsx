@@ -18,13 +18,12 @@ const AfterSubmitPage: React.FC = () => {
           alt="Metropol Logo" 
           className="after-logo"
         />
-        <p className="after-text">
-          Most people spend four hours online every day. 
-          <br />
-          In five minutes, find what you spent five years scrolling for.<br />
-          <br />  
-          Join the waitlist
-        </p>
+   <p className="after-text">
+  In five minutes, get what you spent five years scrolling for.
+  <br />
+  <span className="second-line">Join the waitlist</span>
+</p>
+
       </div>
 
       <div className="after-main-text">
