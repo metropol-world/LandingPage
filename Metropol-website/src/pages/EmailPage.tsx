@@ -141,10 +141,12 @@ const EmailPage: React.FC = () => {
           className="email-logo"
         />
         <p className="email-paragraph">
-  In five minutes, get what you spent five years scrolling for.
-  <br />
-  <span className="second-line">Join the waitlist</span>
-        </p>
+    We're better in person.
+        <br />
+        A hundred things are happening in London right now.<br />
+        <br />  
+        Every day could be new.
+      </p>
       </div>
 
       <form
